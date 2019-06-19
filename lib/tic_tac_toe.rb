@@ -148,4 +148,18 @@ class TicTacToe
       status
    end
 
+   def play
+      puts "Welcome to Tic Tac Toe!"
+      self.display_board
+      while self.over? == false
+         self.turn
+      end
+      
+      if !!self.winner == true 
+         puts "Congratulations #{self.winner}!" 
+      else
+         puts "Cat's Game!"
+      end
+   end
+
 end
