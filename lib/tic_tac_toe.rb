@@ -1,10 +1,4 @@
-require 'pry'
-
 class TicTacToe
-   
-   
-   # THIS IS NOT FINISHED YET, STILL NEED TO MAKE UP THE REST OF THE ARRAY OR ARRAYS
-   # COULD POSSIBLY MAKE THIS A HASH OF ARRAYS
    WIN_COMBINATIONS = [
       [0,1,2],
       [3,4,5],
@@ -35,12 +29,7 @@ class TicTacToe
    #player arg is either "X" or "O"
    def move(indexed_input, player)
       @board[indexed_input] = player
-      #self.switch_player
    end
-
-   #def switch_player
-   #   @current_player == "X" ? @current_player = "O" : @current_player = "X"
-   #end
    
    def position_taken?(indexed_input)
       @board[indexed_input] == " " ? false : true
@@ -49,7 +38,7 @@ class TicTacToe
    def valid_move?(indexed_input)
       valid_input_range = 0..8
       # Check to make sure the number that the user put in is in the valid index range of 0-8
-      # if not, immediately put out false, if so, check to see if the position has been taken then put out true or false accordingly. 
+      # if not, immediately put out false. if so, check to see if the position has been taken then put out true or false accordingly. 
       if valid_input_range.include?(indexed_input)
          self.position_taken?(indexed_input) == true ? false : true
       else
@@ -75,6 +64,7 @@ class TicTacToe
 
    def turn
       valid = false 
+      #This does the looping while trying to get a vaild user input.
       while valid == false
          user_input_string = gets.chomp
          indexed_input = input_to_index(user_input_string)
@@ -82,6 +72,7 @@ class TicTacToe
          puts "Please enter 1-9"
       end
 
+      #with a valid input from the user, go ahead and perform that move, and switch the current user to the other player
       self.move(indexed_input, @current_player)
       self.display_board
       self.current_player
@@ -134,6 +125,7 @@ class TicTacToe
    def over?
       status = nil
       
+      #if won? is truthy (returns an array) then the game is over, otherwise go with whatever the draw? method says. 
       if !!won? == true
          status = true
       else
@@ -143,18 +135,22 @@ class TicTacToe
    end
 
    def winner
+      #set a trigger variable of 'status'  if it is a draw, put out desired nil ouput, otherwise, put out who the winning player is.  
       status = nil
       draw? == true ? status : status = @winning_player
       status
    end
 
    def play
+      #Welcome the player to the game and display the board.  Then run self.turn until over? method goes true
       puts "Welcome to Tic Tac Toe!"
       self.display_board
+      puts "Please enter 1-9"
       while self.over? == false
          self.turn
       end
-      
+
+      #now check to see what type of ending we had -- if winner puts out something truthy (either "X" or "O") then congratulate that winner, otherwise, if it returns falsey (i.e. nil) then put out "Cat's Game!" aka a Draw. 
       if !!self.winner == true 
          puts "Congratulations #{self.winner}!" 
       else
