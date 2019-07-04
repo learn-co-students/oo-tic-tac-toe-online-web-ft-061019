@@ -31,15 +31,29 @@ class TicTacToe
     puts " #{@board[6]} | #{@board[7]} | #{@board[8]} "
   end
   
-  def input_to_index(board, "")
-    if user_input("")
-      user_input.to_i 
-    end 
+  def input_to_index(string_int_movement)
+    index = string_int_movement.to_i - 1
+    index
+  end 
+  
+   def move(board, index)
+    board[index] = player
+    play(board)
   end 
   
   def position_taken?(board, index)
     board[index] == "X" || board[index] == "O"
   end
+  
+  def valid_move?(board, index)
+
+  if index.between?(0,8) && !position_taken?(board, index)
+      puts 'this is a valid move'
+    return true
+  else
+   return false
+  end
+end
   
   def turn(board)
     puts "Please enter 1-9:"
