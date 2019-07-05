@@ -66,16 +66,56 @@ end
     end 
   end 
   
-  def play
-    while !over?(board)
-    turn(board)
-  end 
-  if won?(board)
-    puts "Congratulations #{winner(board)}!"
-    elsif draw?(board)
-    puts "Cat's Game!"
-    end
-  end 
-end 
+  def won?
+  WIN_COMBINATIONS.each do |win_combo|
+    if check_win_combo?('X', win_combo)
+      return win_combo
+      elsif check_win_combo?('O', win_combo)
+      return win_combo
+  end
+end
+return false 
+end
 
+def check_win_combo?(player, win_combo)
+  win_combo.all? do |position|
+    @board[position] == player
+  end
+end
+
+def full?
+  @board.all?{|token| token == "X" || token == "O"}
+end
+
+def draw?
+  !won? && full?
+end
+
+def over?
+  if won?|| draw?||full?
+  return true
+else
+  return false
+end
+end
+
+def winner
+  if win_combo = won?
+    return @board[win_combo.first]
+  end
+end
+  
+  def play
+  while !over?
+    turn
+  end
+  if won?
+    @winner = winner 
+    puts 'Congratulations ' + @winner + "!"
+  elsif draw?
+    puts "Cat's Game!"
+  end
+end
+end 
+TicTacToe.new.play
 
