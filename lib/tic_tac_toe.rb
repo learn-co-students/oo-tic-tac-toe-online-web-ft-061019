@@ -117,5 +117,5 @@ end
   end
 end
 end 
-TicTacToe.new.play
-
+TicTacToe.new
+TicTacToe.play
