@@ -1,0 +1,9 @@
+index = 
+        if valid_move?(index) == true
+            move
+            display_board
+        end
+
+
+         
+        
